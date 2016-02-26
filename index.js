@@ -9,6 +9,11 @@ export function StackException(message) {
    this.name = "StackException";
 }
 
+export function NotAKeyValue(message) {
+   this.message = message;
+   this.name = "NotAKeyValue";
+}
+
 /** Class representing a stack data structure. */
 export class Stack {
     
@@ -17,7 +22,13 @@ export class Stack {
      */
     constructor(...elements) {
         this._stack = [];
-        this._stack.push(...elements);
+	elements.forEach{ function(item) {
+	    if ( Object.keys(item).size() > 1 ) {
+		throw new NotAKeyValue( "Not a key-value pair" )
+	    } else {
+		this._stack.push(item);
+	    }
+	});
         this._lastIndex = 0;
     }
     

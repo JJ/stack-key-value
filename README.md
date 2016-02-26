@@ -6,30 +6,33 @@
 [![Dependency Status][depstat-image]][depstat-url]
 [![DevDependency Status][depstat-dev-image]][depstat-dev-url]
 
-> Simple stack implementation on ES6
+> Simple object stack implementation on ES6
+
+It is based on [`stack-data`](https://github.com/greybax/stack-data),
+with the added capability to work as a hash
 
 ## Install
 
-    npm install --save stack-data
+    npm install --save stack-object
 
 ## Usage
 
 ### 2 ways for adding element in stack:
 
-* in constructor ```new Stack(1,"2",3,[4, 5],6);```
+* in constructor ```new Stack({ "foo": 1},{"2":3},{"bar":[3,[4, 5],6]);```
 * via ```push(elem)``` method
 
 ```js
 // Examples of using stack-data
 
 //Added stack elements in constructor
-let preInitStack = new Stack(1,"2",3,[4, 5],6);
+let preInitStack = new Stack({ "foo": 1},{"2":3},{"bar":[3,[4, 5],6]);
 preInitStack.size;       //5
 
 //Added elements classically via push()
 let stack = new Stack();
 stack.size;              //0
-stack.push(1).push("2");
+stack.push(1).push({ "yahoo": "2"} );
 stack.size;              //2
 stack.pop();             //"2"
 stack.size;              //1
@@ -41,7 +44,9 @@ stack.size;              //1
 
 ### push(elem)
 
-```push``` - Pushes element into stack. Throws an ```StackException``` when parameter is empty.
+```push``` - Pushes object into stack. Throws an ```StackException```
+when parameter is empty and and "NotAKeyValue" if it is not a
+key-value pair.
 
 #### elem
 

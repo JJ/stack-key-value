@@ -4,7 +4,7 @@ import { Stack, StackException } from "../index";
 import { equal, throws } from 'assert';
 
 let stack = new Stack();
-let preInitStack = new Stack(1,"2",3,[4, 5],6);
+let preInitStack = new Stack({"foo":1},{"2":3},{"baz":[3,[4, 5],6]});
 
 describe("Stack", function _describeStack(){
     describe("init", function _describeInit(){
@@ -17,7 +17,7 @@ describe("Stack", function _describeStack(){
     });
     describe("push", function _describePush(){
         it("should be stack size equals 2", function _it() {
-            stack.push(1).push(2);
+            stack.push({"foo":1}).push({"bar":2});
             equal(2, stack.size);
         });
         it("should be throw an exception if parameter is empty", function _it() {
