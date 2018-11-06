@@ -9,9 +9,23 @@ export function StackException(message) {
    this.name = "StackException";
 }
 
+
+/**
+ * Custom exception related with objects
+ * @param {string} message - message which will be shown when exception will be thrown
+ */
 export function NotAKeyValue(message) {
    this.message = message;
    this.name = "NotAKeyValue";
+}
+
+/**
+ * Custom exception related with stack size
+ * @param {string} message - message which will be shown when exception will be thrown
+ */
+export function MaxSizeExceeded(message) {
+   this.message = message;
+   this.name = "MaxSizeExceeded";
 }
 
 /** Class representing a stack data structure. */
@@ -20,14 +34,16 @@ export class Stack {
     /**
      * Initialize stack as empty.
      */
-    constructor(...elements) {
+    constructor(max_size,...elements) {
+	if (elements.size() > max_size ) {
+	    throw new MaxSizeExceeded( "Max stack size has been exceeded" );
+	}
+	this._max_size = max_size;
         this._stack = [];
+	this._index = {};
 	elements.forEach{ function(item) {
-	    if ( Object.keys(item).size() > 1 ) {
-		throw new NotAKeyValue( "Not a key-value pair" )
-	    } else {
-		this._stack.push(item);
-	    }
+	    this._stack.push(item);
+	}
 	});
         this._lastIndex = 0;
     }
@@ -41,6 +57,13 @@ export class Stack {
         if (!elem) {
             throw new StackException("Parameter should not be empty");
         }
+	if ( !defined Object.keys(elem) || Object.keys(elem).size() > 1 ) {
+		throw new NotAKeyValue( "Not a key-value pair" )
+	} 
+	if ( this._lastIndex +1 > this._max_size ) {
+	    throw new MaxSizeExceeded( "Max size exceeded in push" );
+	}
+	
         if (this._stack.length === 0) {
             this._stack[0] = elem;
             this._lastIndex++;
